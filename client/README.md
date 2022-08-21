@@ -1,5 +1,6 @@
 # Getting Started with Create React App
 
+https://www.youtube.com/watch?v=mhM-blTHBz8
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # To setup ESLINT and PRETTIER
