@@ -28,20 +28,20 @@ function LabelComponent({ data }) {
 function Labels() {
   // eslint-disable-next-line
   const { data, isFetching, isSuccess, isError } = api.useGetLabelsQuery();
-  let Transaction;
+  let CurrentLabels;
 
   if (isFetching) {
-    Transaction = <div>Fetching....</div>;
+    CurrentLabels = <div>Fetching....</div>;
   } else if (isSuccess) {
-    Transaction = getLabels(data, "type").map((v) => (
-      <LabelComponent key={v._id} data={v} />
+    CurrentLabels = getLabels(data, "type").map((v) => (
+      <LabelComponent key={v.type} data={v} />
     ));
   } else if (isError) {
-    Transaction = <div>Error....</div>;
+    CurrentLabels = <div>Error....</div>;
   }
 
   // eslint-disable-next-line
-  return <> {Transaction}</>;
+  return <> {CurrentLabels}</>;
 }
 
 export default Labels;
