@@ -1,20 +1,25 @@
 const routes = require("express").Router();
-const transactionControllers = require("../controller/transaction.controller");
-const categoryControllers = require("../controller/category.controller");
-const labelControllers = require("../controller/label.controller");
+const model = require("../models/model");
+const modelWrapper = require("../models/wrapper")(model);
 
-routes.route("/api/category").get(categoryControllers.getAllCategories);
-routes.route("/api/category/:id").get(categoryControllers.getCategory);
-routes.route("/api/category").post(categoryControllers.createCategory);
+const transactionController = require("../controller/transaction.controller")(
+  modelWrapper
+);
+const categoryController = require("../controller/category.controller")(
+  modelWrapper
+);
+const labelController = require("../controller/label.controller")(modelWrapper);
 
-routes.route("/api/transaction").get(transactionControllers.getAllTransactions);
-routes.route("/api/transaction/:id").get(transactionControllers.getTransaction);
+routes.route("/api/category").get(categoryController.getAllCategories);
+routes.route("/api/category/:id").get(categoryController.getCategory);
+routes.route("/api/category").post(categoryController.createCategory);
 
-routes.route("/api/transaction").post(transactionControllers.createTranaction);
-routes
-  .route("/api/transaction")
-  .delete(transactionControllers.deleteTranaction);
+routes.route("/api/transaction").get(transactionController.getAllTransactions);
+routes.route("/api/transaction/:id").get(transactionController.getTransaction);
 
-routes.route("/api/label").get(labelControllers.getLabels);
+routes.route("/api/transaction").post(transactionController.createTranaction);
+routes.route("/api/transaction").delete(transactionController.deleteTranaction);
+
+routes.route("/api/label").get(labelController.getLabels);
 
 module.exports = routes;

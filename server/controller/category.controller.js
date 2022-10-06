@@ -1,62 +1,59 @@
-const model = require("../models/model");
+module.exports = function categoryController(models) {
+  return {
+    createCategory(req, res) {
+      // const Create = new model.Categories({
+      //   type: "Investment",
+      //   color: "#fcbe44",
+      // });
+      if (!req.body) {
+        res.status(400).json("Post HTTP Data not provided");
+      }
+      const { type, color } = req.body;
 
-function createCategory(req, res) {
-  // const Create = new model.Categories({
-  //   type: "Investment",
-  //   color: "#fcbe44",
-  // });
-  if (!req.body) {
-    res.status(400).json("Post HTTP Data not provided");
-  }
-  const { type, color } = req.body;
-  const Create = new model.Categories({
-    type,
-    color,
-  });
-
-  Create.save()
-    .then((data) => {
-      res.status(201).json(data);
-    })
-    .catch((err) => {
-      res.status(400).json({
-        message: `Error while creating Category ${err}`,
+      const Create = models.fetchNewModel("Categories", {
+        type,
+        color,
       });
-    });
-}
 
-function getCategory(req, res) {
-  const Categories = model.Categories;
+      Create.save()
+        .then((data) => {
+          res.status(201).json(data);
+        })
+        .catch((err) => {
+          res.status(400).json({
+            message: `Error while creating Category ${err}`,
+          });
+        });
+    },
 
-  Categories.find({
-    _id: req.params.id,
-  })
-    .then((data) => {
-      res.status(201).json(data);
-    })
-    .catch((err) => {
-      res.status(400).json({
-        message: `Error while getting Category ${err}`,
-      });
-    });
-}
+    getCategory(req, res) {
+      const Categories = models.get("Categories");
 
-function getAllCategories(req, res) {
-  const Categories = model.Categories;
+      Categories.find({
+        _id: req.params.id,
+      })
+        .then((data) => {
+          res.status(201).json(data);
+        })
+        .catch((err) => {
+          res.status(400).json({
+            message: `Error while getting Category ${err}`,
+          });
+        });
+    },
 
-  Categories.find({})
-    .then((data) => {
-      res.status(201).json(data);
-    })
-    .catch((err) => {
-      res.status(400).json({
-        message: `Error while getting Categories ${err}`,
-      });
-    });
-}
+    getAllCategories(req, res) {
+      const Categories = models.get("Categories");
 
-module.exports = {
-  createCategory,
-  getAllCategories,
-  getCategory,
+      Categories.find({})
+        .then((data) => {
+          res.status(201).json(data);
+        })
+        .catch((err) => {
+          res.status(400).json({
+            message: `Error while getting Categories ${err}`,
+          });
+        });
+    },
+  };
 };
