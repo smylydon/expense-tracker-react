@@ -11,7 +11,7 @@ export const apiSlice = createApi({
     }),
 
     getLabels: builder.query({
-      query: () => "/api/labels",
+      query: () => "/api/label",
       providesTags: ["transaction"],
     }),
 
